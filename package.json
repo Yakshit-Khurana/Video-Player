@@ -1,0 +1,11 @@
+{
+  "name": "mega-project",
+  "version": "1.0.0",
+  "description": "video player project",
+  "main": "index.js",
+  "scripts": {
+    "start":"node index.js"
+  },
+  "author": "Yakshit Khurana",
+  "license": "ISC"
+}
