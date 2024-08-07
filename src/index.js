@@ -1,7 +1,17 @@
 import "dotenv/config";
-
 import connectDB from "./db/index.js";
-connectDB();
+import { app } from "./app.js";
+//connectDB is async-await and hence it returns a promise
+//So handling promise
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      `Server is running at port ${process.env.PORT}`;
+    });
+  })
+  .catch((err) => {
+    console.log("MONGODB COnnection FAILED!!!", err);
+  });
 /*
 
 ONE WAY TO CONNECT TO DATABASE a) using index.js itself- index.js has been polluted a lot due to following code. So we use 2nd method
