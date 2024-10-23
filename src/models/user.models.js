@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      index: true, //whenever we wnat to search in db it is beeter o make index:true for optimisation
+      index: true, //whenever we wnat to search in db it is better to make index:true for optimisation
     },
     email: {
       type: String,
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
     },
     fullName: {
       type: String,
-      required: [true, "Fill Password"],
+      required: [true, "Enter your Full Name"],
       trim: true,
       index: true,
     },
@@ -49,6 +49,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+//pre Hook              don't give callback function as arrow function
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
@@ -58,6 +59,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
@@ -72,6 +74,7 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
